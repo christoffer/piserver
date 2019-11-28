@@ -98,3 +98,6 @@ install(DIRECTORY DESTINATION /var/lib/piserver/scripts)
 install(PROGRAMS scripts/postinstall.sh scripts/convert.sh scripts/chroot_image.sh DESTINATION /var/lib/piserver/scripts)
 install(FILES scripts/convert_chrooted_cmds scripts/mkhomedir-piserver DESTINATION /var/lib/piserver/scripts)
 install(FILES scripts/50-piserver-dhcpcd-hook DESTINATION /lib/dhcpcd/dhcpcd-hooks)
+# NOTE(christoffer) These doesn't seem to be installed properly with the current setup?
+install(FILES configs/piserver_sshd_config DESTINATION /etc/ssh)
+install(FILES configs/piserver_ssh.service DESTINATION /lib/systemd/system)
