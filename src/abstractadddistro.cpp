@@ -129,8 +129,10 @@ void AbstractAddDistro::_parseDistroInfo(const std::string &data)
 
 void AbstractAddDistro::_onRepolistDownloadFailed()
 {
-    Gtk::MessageDialog d( _("Error downloading repository information: ")+_dt->lastError() );
-    d.run();
+    // NOTE(christoffer) -- Skip displaying a message box if the repo download information failed. This is expected
+    // in our offline case. Delete the download thread however, since it's not needed.
+    // Gtk::MessageDialog d( _("Error downloading repository information: ")+_dt->lastError() );
+    // d.run();
     delete _dt;
     _dt = NULL;
 }
@@ -187,7 +189,11 @@ void AbstractAddDistro::startInstallation()
         return;
     }
 
-    _progressLabel1->set_text(_("Starting download"));
+    // NOTE(christoffer) -- Be a bit pedantic about what's going on. In case it's a local file, it's actually copied
+    // not "downloaded" per-se.
+    bool isFileUrl = url.rfind("file://", 0) == 0;
+    string progressMessage = isFileUrl ? _("Starting copy") : _("Starting download");
+    _progressLabel1->set_text(progressMessage);
 
     _dist = new Distribution(distroName, version);
     _dist->setLatestVersion(version);

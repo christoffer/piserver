@@ -42,7 +42,9 @@ void DependenciesInstallThread::run()
 
     try
     {
-        _execCheckResult("apt-get update -q");
+        // NOTE(christoffer) -- Don't force update apt cache. We want to be able to use the pre-seeded packages
+        // from apt-offline, and enable setting up the machine completely without internet.
+        // _execCheckResult("apt-get update -q");
 
         if (installSlapd)
         {

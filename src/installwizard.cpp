@@ -91,14 +91,16 @@ void InstallWizard::onClose()
 
 void InstallWizard::setAddHostOkButton()
 {
-    _assistant->set_page_complete(*_addHostPage,
-                                  addHostFieldsOk() && _ifacecombo->get_active_row_number() != -1 );
+    // NOTE(christoffer) -- Don't force adding a client during the install wizard
+    _assistant->set_page_complete(*_addHostPage, true);
+                                  // addHostFieldsOk() && _ifacecombo->get_active_row_number() != -1 );
 }
 
 void InstallWizard::setAddUserOkButton()
 {
-    _assistant->set_page_complete(*_addUserPage,
-                                  addUserFieldsOk() );
+    // NOTE(christoffer) -- Don't force adding a user during the install wizard
+    _assistant->set_page_complete(*_addUserPage, true);
+                                  // addUserFieldsOk() );
 }
 
 void InstallWizard::setAddDistroOkButton()
